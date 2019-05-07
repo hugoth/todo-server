@@ -7,9 +7,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/my-database", {
-  useNewUrlParser: true
-});
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost:3000/todo-server",
+  {
+    useNewUrlParser: true
+  }
+);
 
 const Spot = mongoose.model("Spots", {
   title: {
@@ -46,6 +49,8 @@ app.get("/", async (req, res) => {
 
 // **Update**
 app.post("/update", async (req, res) => {
+  console.log(req.body);
+
   try {
     if (req.body.id) {
       const spot = await Spot.findOne({ _id: req.body.id });
