@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost:3000/todo-server",
+  process.env.MONGODB_URI || "mongodb://localhost:/todo-server",
   {
     useNewUrlParser: true
   }
@@ -49,8 +49,6 @@ app.get("/", async (req, res) => {
 
 // **Update**
 app.post("/update", async (req, res) => {
-  console.log(req.body);
-
   try {
     if (req.body.id) {
       const spot = await Spot.findOne({ _id: req.body.id });
@@ -75,8 +73,6 @@ app.post("/delete", async (req, res) => {
   try {
     if (req.body.id) {
       const spot = await Spot.findOne({ _id: req.body.id });
-      // Autre manière de trouver un document à partir d'un `id` :
-      // const student = await Student.findById(req.body.id);
       await spot.remove();
       res.json({ message: "The spot is Removed" });
     } else {
