@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://localhost/todo-server", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/my-database", {
+  useNewUrlParser: true
+});
 
 const Spot = mongoose.model("Spots", {
   title: {
@@ -78,6 +80,4 @@ app.post("/delete", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server started");
-});
+app.listen(process.env.PORT || 3000);
