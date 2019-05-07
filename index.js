@@ -20,6 +20,9 @@ const Spot = mongoose.model("Spots", {
   },
   isDone: {
     type: Boolean
+  },
+  id: {
+    type: Number
   }
 });
 
@@ -28,7 +31,8 @@ app.post("/create", async (req, res) => {
   try {
     const newSpot = new Spot({
       title: req.body.title,
-      isDone: req.body.isDone
+      isDone: req.body.isDone,
+      id: req.body.id
     });
     await newSpot.save();
     res.json({ message: "Spot sucessfully created" });
